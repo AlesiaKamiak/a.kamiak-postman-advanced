@@ -12,10 +12,10 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"var g = pm.variables.replaceIn('{{$guid}}');\r",
 							"const moment = require('moment');\r",
+							"const guid = pm.variables.replaceIn('{{$guid}}');\r",
 							"pm.collectionVariables.set(\"today\", moment().format(\"MM/DD/YYYY\")); \r",
-							"pm.collectionVariables.set(\"myGuid\", g);"
+							"pm.collectionVariables.set(\"myGuid\", guid);"
 						],
 						"type": "text/javascript"
 					}
@@ -24,14 +24,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"//const jsonObject = xml2Json(requestBody);\r",
-							"\r",
-							"// postman.setEnvironmentVariable(\"projectName\", jsonData.token);\r",
-							"//var xml = \"<music><album>Beethoven</album></music>\";\r",
-							"\r",
-							"//var result = $(responseBody).find(\"project\").find('name').text();\r",
-							"//pm.globals.get(\"variable_key\");\r",
-							"//console.log(guid);"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -84,18 +77,17 @@
 					"script": {
 						"exec": [
 							"const jsonObject = xml2Json(responseBody);\r",
-							"var g = pm.collectionVariables.get(\"myGuid\");\r",
-							"pm.test(\"The progect exists \" + g, () => {\r",
-							"  pm.expect(jsonObject.projects.project.filter(x => x.name == g).length>0).to.eql(true);\r",
-							"});\r",
+							"const guid = pm.collectionVariables.get(\"myGuid\");\r",
 							"\r",
+							"pm.test('The progect exists ' + guid, () => {\r",
+							"    pm.expect(jsonObject.projects.project.filter(x => x.name === guid).length > 0).to.eql(true);\r",
+							"});\r",
 							"var toDelete = jsonObject.projects.project\r",
-							"    \r",
-							"    .filter(x => x.name >= g.length || x.name==g)\r",
+							"    .filter(x => x.name >= guid.length || x.name === guid)\r",
 							"    .slice(0, 2)\r",
 							"    .map(x => x.id._);\r",
-							"    console.log(toDelete);\r",
-							"pm.collectionVariables.set('toDelete',toDelete);"
+							"console.log(toDelete);\r",
+							"pm.collectionVariables.set('toDelete', toDelete);"
 						],
 						"type": "text/javascript"
 					}

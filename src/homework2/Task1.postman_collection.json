@@ -6,59 +6,72 @@
 	},
 	"item": [
 		{
-			"name": "Task1",
-			"event": [
+			"name": "utils",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
+					"name": "Example Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "example.com",
+							"host": [
+								"example",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
+						"type": "text/javascript",
 						"exec": [
-							"const names1 = [\"Alex\", \"Dima\", \"Kate\", \"Galina\", \"Ivan\"];\r",
-							"const names2 = [\"Dima\", \"Ivan\", \"Kate\"];\r",
-							"const url = \"httpbin.org/post\"\r",
-							"\r",
-							"pm.sendRequest(url, response => {\r",
-							"response = _.difference(names1, names2);\r",
-							"    console.log(response);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
+							"utils = {",
+							"  myFuncDiff: function(names1, names2) {",
+							"    return _.difference(names1, names2);",
+							"  }",
+							"};"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const names1 = [\"Alex\", \"Dima\", \"Kate\", \"Galina\", \"Ivan\"];",
+							"const names2 = [\"Dima\", \"Ivan\", \"Kate\"];",
+							"pm.test(\"array difference\", function () {",
+							"    pm.expect(utils.myFuncDiff(names1, names2)).to.eql([\"Alex\", \"Galina\"])",
+							"});"
+						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "httpbin.org/get",
-					"host": [
-						"httpbin",
-						"org"
-					],
-					"path": [
-						"get"
-					]
-				}
-			},
-			"response": []
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
