@@ -1,0 +1,77 @@
+{
+	"info": {
+		"_postman_id": "dde6cd0d-5595-4e72-b917-0b820ea457db",
+		"name": "Task1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "utils",
+			"item": [
+				{
+					"name": "Example Request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "example.com",
+							"host": [
+								"example",
+								"com"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"utils = {",
+							"  myFuncDiff: function(names1, names2) {",
+							"    return _.difference(names1, names2);",
+							"  }",
+							"};"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const names1 = [\"Alex\", \"Dima\", \"Kate\", \"Galina\", \"Ivan\"];",
+							"const names2 = [\"Dima\", \"Ivan\", \"Kate\"];",
+							"pm.test(\"array difference\", function () {",
+							"    pm.expect(utils.myFuncDiff(names1, names2)).to.eql([\"Alex\", \"Galina\"])",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
